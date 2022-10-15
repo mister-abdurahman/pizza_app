@@ -8,7 +8,7 @@ const { authenticate } = require('./authRoutes');
 
 
 orderRoute.get('/', (req, res) => {
-    authenticate(req, res).then( async () => {
+    async () => {
         const queryObject = { ...req.query }
         const checkKeys = ["sort", "page"];
         checkKeys.forEach((key) => delete queryObject[key]);
@@ -29,11 +29,9 @@ orderRoute.get('/', (req, res) => {
 
         const orders = await orderQuery
         
-        res.json({ status: true, orders })
+    res.json({ status: true, orders })
 
-    }).catch((err) => {
-        res.status(400).send(err)
-    })
+    }
 })
 
 
