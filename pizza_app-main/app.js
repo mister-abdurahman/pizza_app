@@ -1,7 +1,23 @@
 const express = require('express');
 const passport = require('passport');
+const rateLimit = require("express-rate-limit");
+const helmet = require('helmet')
 
 const app = express()
+
+const limiter = rateLimit({
+	windowMs: 0.2 * 60 * 1000, // 15 minutes
+	max: 4, 
+	standardHeaders: true, 
+	legacyHeaders: false, 
+})
+
+//add secuirty
+app.use(helmet())
+
+
+// Applying the rate limiting middleware to all requests
+app.use(limiter)
 
 app.use(passport.initialize())
 require('./authentication/passport')
